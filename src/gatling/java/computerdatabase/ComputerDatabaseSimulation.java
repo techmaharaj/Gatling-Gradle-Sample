@@ -81,8 +81,8 @@ public class ComputerDatabaseSimulation extends Simulation {
             );
 
     // Get VUs and duration from system properties or use default values
-    int vus = Integer.parseInt(System.getProperty("vus", "10"));
-    int duration = Integer.parseInt(System.getProperty("duration", "10"));
+    int vus = Integer.parseInt(System.getenv().getOrDefault("vus", "10"));
+    int duration = Integer.parseInt(System.getenv().getOrDefault("duration", "10"));
     
     ScenarioBuilder users = scenario("Users").exec(search, browse);
     ScenarioBuilder admins = scenario("Admins").exec(search, browse, edit);
