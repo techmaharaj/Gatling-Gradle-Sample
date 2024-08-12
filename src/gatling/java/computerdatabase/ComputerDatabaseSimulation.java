@@ -80,12 +80,16 @@ public class ComputerDatabaseSimulation extends Simulation {
                 "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:109.0) Gecko/20100101 Firefox/119.0"
             );
 
+    // Get VUs and duration from system properties or use default values
+    int vus = Integer.parseInt(System.getProperty("vus", "10"));
+    int duration = Integer.parseInt(System.getProperty("duration", "10"));
+    
     ScenarioBuilder users = scenario("Users").exec(search, browse);
     ScenarioBuilder admins = scenario("Admins").exec(search, browse, edit);
 
     {
         setUp(
-            users.injectOpen(rampUsers(10).during(10)),
+            users.injectOpen(rampUsers(vus).during(duration)),
             admins.injectOpen(rampUsers(2).during(10))
         ).protocols(httpProtocol);
     }
